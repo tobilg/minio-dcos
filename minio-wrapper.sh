@@ -14,21 +14,48 @@ INSTANCES=$(curl -l -s -H "Content-Type: application/json" http://master.mesos:8
 echo "Instances: $INSTANCES"
 
 # try until DNS is ready
-ENDPOINT=$(echo "${MARATHON_APP_ID}.marathon.containerip.dcos.thisdcos.directory" | sed -e "s///g")
+ENDPOINT=$(echo "${MARATHON_APP_ID}.marathon.containerip.dcos.thisdcos.directory" | sed -e "s/\///g")
+
+# define mino start command
+MINIO_CMD="minio server "
 
 # wait for all tasks starting
 for i in {1..20}
 do
-	digs=`dig +short $ENDPOINT`
-	if [ -z "$digs" ]; then
+	ENPOINT_IPS=`dig +short $ENDPOINT`
+
+	# Check if endpoints are found
+	if [ -z "$ENPOINT_IPS" ]; then
 		echo "no DNS record found for $ENDPOINT"
 	else
-		# calculate discovery members
-		echo $digs
-		#members=`echo $digs | sed -e "s/$ip //g" -e 's/ /:9000,/g'`":9000"
+		# show endpoint ips
+		echo $ENPOINT_IPS
+	fi
+
+	# check if endpoints match desired Marathon instances
+	if [ "${ENPOINT_IPS[@]}" -eq "${INSTANCES}" ]; then
+		echo "Got matching endpoints compared to Marathon instances"
+	else
+		echo "Got non-matching endpoints (${ENPOINT_IPS[@]}) compared to Marathon instances (${INSTANCES})"
+	fi
+
+	# handling
+	if [ -z "$ENPOINT_IPS" ] && [ "${ENPOINT_IPS[@]}" -eq "${INSTANCES}" ]; then
+
+		# iterate over the endpoints
+		for endpoint_ip in "${ENPOINT_IPS[@]}"; do
+			MINIO_CMD="${MINIO_CMD} http://${endpoint_ip}/export "
+    	done
+		
 		break
 	fi
+
    	sleep 2
+
 done
 
-sleep 1000
+# echo final minio command
+echo "${MINIO_CMD}"
+
+# execute minio
+exec ${MINIO_CMD}
