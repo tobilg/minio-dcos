@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # wait 5 seconds for dns to
-echo "waiting 5 seconds for dns"
-sleep 5
+echo "Waiting 30 seconds for dns"
+sleep 30
 
 # print environment
 env
@@ -16,7 +16,7 @@ echo "Instances: $INSTANCES"
 # try until DNS is ready
 ENDPOINT=$(echo "${MARATHON_APP_ID}.marathon.containerip.dcos.thisdcos.directory" | sed -e "s/\///g")
 
-echo "Endpoint: ${ENPOINT}"
+echo "Endpoint: ${ENDPOINT}"
 
 # define mino start command
 MINIO_CMD="minio server "
@@ -47,7 +47,7 @@ do
 	fi
 
 	# handling
-	if [ -z "$ENPOINT_IPS" ] && [ "${ENPOINT_IPS[@]}" -eq "${INSTANCES}" ]; then
+	if [ "${ENPOINT_IPS[@]}" -eq "${INSTANCES}" ]; then
 
 		# iterate over the endpoints
 		for endpoint_ip in "${ENPOINT_IPS[@]}"; do
