@@ -28,3 +28,5 @@ url="${MARATHON_APP_ID:-.marathon.containerip.dcos.thisdcos.directory}"
 #	fi
 #   sleep 2
 #done
+
+sleep 1000
