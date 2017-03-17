@@ -47,7 +47,7 @@ do
 	fi
 
 	# handling
-	if [ "${ENPOINT_IPS[@]}" -eq "${INSTANCES}" ]; then
+	if [ "${#ENPOINT_IPS[@]}" -eq "${INSTANCES}" ]; then
 
 		# iterate over the endpoints
 		for endpoint_ip in "${ENPOINT_IPS[@]}"; do
