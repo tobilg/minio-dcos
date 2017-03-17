@@ -4,4 +4,4 @@ RUN apk update && apk add --no-cache bind-tools jq bash
 
 ADD minio-wrapper.sh .
 
-ENTRYPOINT ["minio-wrapper.sh"]
+ENTRYPOINT ["/go/src/github.com/minio/minio-wrapper.sh"]
