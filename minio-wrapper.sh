@@ -16,13 +16,20 @@ echo "Instances: $INSTANCES"
 # try until DNS is ready
 ENDPOINT=$(echo "${MARATHON_APP_ID}.marathon.containerip.dcos.thisdcos.directory" | sed -e "s/\///g")
 
+echo "Endpoint: ${ENPOINT}"
+
 # define mino start command
 MINIO_CMD="minio server "
 
 # wait for all tasks starting
 for i in {1..20}
 do
-	ENPOINT_IPS=`dig +short $ENDPOINT`
+
+	# get ip addresses and write to file
+	dig +short $ENDPOINT > minio-endpoints.txt
+
+	# read the endpoint ips from the file
+	IFS=$'\n' read -d '' -r -a ENPOINT_IPS < minio-endpoints.txt
 
 	# Check if endpoints are found
 	if [ -z "$ENPOINT_IPS" ]; then
