@@ -14,7 +14,7 @@ INSTANCES=$(curl -l -s -H "Content-Type: application/json" http://master.mesos:8
 echo "Instances: $INSTANCES"
 
 # try until DNS is ready
-ENDPOINT="${MARATHON_APP_ID:-.marathon.containerip.dcos.thisdcos.directory}"
+ENDPOINT=$(echo "${MARATHON_APP_ID}.marathon.containerip.dcos.thisdcos.directory" | sed -e "s///g")
 
 # wait for all tasks starting
 for i in {1..20}
@@ -26,9 +26,7 @@ do
 		# calculate discovery members
 		echo $digs
 		#members=`echo $digs | sed -e "s/$ip //g" -e 's/ /:9000,/g'`":9000"
-#		echo "calculated initial discovery members: $members"
-#		export NEO4J_causalClustering_initialDiscoveryMembers=$members
-#		break
+		break
 	fi
    	sleep 2
 done
