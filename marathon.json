@@ -48,7 +48,7 @@
     "relaunchEscalationTimeoutSeconds": 120
   },
   "env": {
-    "MINIO_ACCESS_KEY": "test",
-    "MINIO_SECRET_KEY": "secret"
+    "MINIO_ACCESS_KEY": "miniotest",
+    "MINIO_SECRET_KEY": "secret123"
   }
 }
