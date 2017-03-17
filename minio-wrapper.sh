@@ -19,9 +19,9 @@ ENDPOINT="${MARATHON_APP_ID:-.marathon.containerip.dcos.thisdcos.directory}"
 # wait for all tasks starting
 for i in {1..20}
 do
-	digs=`dig +short $url`
+	digs=`dig +short $ENDPOINT`
 	if [ -z "$digs" ]; then
-		echo "no DNS record found for $url"
+		echo "no DNS record found for $ENDPOINT"
 	else
 		# calculate discovery members
 		echo $digs
