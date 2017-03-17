@@ -40,10 +40,10 @@ do
 	fi
 
 	# check if endpoints match desired Marathon instances
-	if [ "${ENPOINT_IPS[@]}" -eq "${INSTANCES}" ]; then
+	if [ "${#ENPOINT_IPS[@]}" -eq "${INSTANCES}" ]; then
 		echo "Got matching endpoints compared to Marathon instances"
 	else
-		echo "Got non-matching endpoints (${ENPOINT_IPS[@]}) compared to Marathon instances (${INSTANCES})"
+		echo "Got non-matching endpoints (${#ENPOINT_IPS[@]}) compared to Marathon instances (${INSTANCES})"
 	fi
 
 	# handling
