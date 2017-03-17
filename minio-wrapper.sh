@@ -36,7 +36,8 @@ do
 		echo "no DNS record found for $ENDPOINT"
 	else
 		# show endpoint ips
-		echo $ENPOINT_IPS
+		echo "Endpoint IPs are:"
+		cat minio-endpoints.txt
 	fi
 
 	# check if endpoints match desired Marathon instances
@@ -51,7 +52,7 @@ do
 
 		# iterate over the endpoints
 		for endpoint_ip in "${ENPOINT_IPS[@]}"; do
-			MINIO_CMD="${MINIO_CMD} http://${endpoint_ip}/export "
+			MINIO_CMD="${MINIO_CMD} http://${endpoint_ip}/export"
     	done
 		
 		break
@@ -62,6 +63,7 @@ do
 done
 
 # echo final minio command
+echo "The following command will be run to start Minio:"
 echo "${MINIO_CMD}"
 
 # execute minio
