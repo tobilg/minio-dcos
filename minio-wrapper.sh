@@ -6,7 +6,11 @@ sleep 5
 
 env
 
-INSTANCES=$(curl -l -s -H "Content-Type: application/json" http://master.mesos:8080/v2/apps/${MARATHON_APP_ID} | jq '.app.instances')
+echo "http://master.mesos:8080/v2/apps${MARATHON_APP_ID}"
+
+curl -l -s -H "Content-Type: application/json" http://master.mesos:8080/v2/apps${MARATHON_APP_ID}
+
+INSTANCES=$(curl -l -s -H "Content-Type: application/json" http://master.mesos:8080/v2/apps${MARATHON_APP_ID} | jq '.app.instances')
 
 echo "Instances: $INSTANCES"
 
