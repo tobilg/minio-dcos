@@ -1,0 +1,54 @@
+{
+  "id": "/minio-dcos",
+  "instances": 4,
+  "cpus": 0.1,
+  "mem": 128,
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "miniodata",
+        "mode": "RW",
+        "persistent": {
+          "type": "root",
+          "size": 1000
+        }
+      },
+      {
+        "containerPath": "/export",
+        "hostPath": "miniodata",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "minioconfig",
+        "mode": "RW",
+        "persistent": {
+          "type": "root",
+          "size": 10
+        }
+      },
+      {
+        "containerPath": "/root/.minio",
+        "hostPath": "minioconfig",
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "tobilg/minio-dcos",
+      "network": "USER",
+      "privileged": false,
+      "forcePullImage": true
+    }
+  },
+  "ipAddress":{  
+    "networkName":"dcos"
+  },
+  "residency": {
+    "taskLostBehavior": "WAIT_FOREVER",
+    "relaunchEscalationTimeoutSeconds": 120
+  },
+  "env": {
+    "MINIO_ACCESS_KEY": "test",
+    "MINIO_SECRET_KEY": "secret"
+  }
+}
