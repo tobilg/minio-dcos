@@ -19,7 +19,7 @@ ENDPOINT=$(echo "${MARATHON_APP_ID}.marathon.containerip.dcos.thisdcos.directory
 echo "Endpoint: ${ENDPOINT}"
 
 # define mino start command
-MINIO_CMD="minio server "
+MINIO_CMD="minio server"
 
 # wait for all tasks starting
 for i in {1..20}

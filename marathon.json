@@ -1,8 +1,8 @@
 {
   "id": "/minio-dcos",
   "instances": 4,
-  "cpus": 0.1,
-  "mem": 128,
+  "cpus": 0.5,
+  "mem": 512,
   "container": {
     "type": "DOCKER",
     "volumes": [
