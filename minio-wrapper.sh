@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# wait 5 seconds for dns to
-echo "Waiting 30 seconds for dns"
-sleep 30
+# wait 15 seconds for dns to
+echo "Waiting 15 seconds for dns"
+sleep 15
 
 # print environment
 env
@@ -22,8 +22,7 @@ echo "Endpoint: ${ENDPOINT}"
 MINIO_CMD="minio server"
 
 # wait for all tasks starting
-for i in {1..20}
-do
+for i in {1..20} do
 
 	# get ip addresses and write to file
 	dig +short $ENDPOINT > minio-endpoints.txt
@@ -53,7 +52,7 @@ do
 		# iterate over the endpoints
 		for endpoint_ip in "${ENPOINT_IPS[@]}"; do
 			MINIO_CMD="${MINIO_CMD} http://${endpoint_ip}/export"
-    	done
+    		done
 		
 		break
 	fi
