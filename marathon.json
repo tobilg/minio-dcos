@@ -47,6 +47,7 @@
     "taskLostBehavior": "WAIT_FOREVER",
     "relaunchEscalationTimeoutSeconds": 120
   },
+  "unreachableStrategy": "disabled",
   "env": {
     "MINIO_ACCESS_KEY": "miniotest",
     "MINIO_SECRET_KEY": "secret123"
